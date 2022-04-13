@@ -4,12 +4,14 @@ import { fetchQuizQuestions } from './API';
 import QuestionCard from './Components/QuestionCard';
 // Types
 import { Difficulty, QuestionState } from './API';
-type AnswerObject = {
+
+
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
   correctAnswer: string;
-}
+};
 
 
 const TOTAL_QUESTIONS = 10;
@@ -42,15 +44,37 @@ const App = () => {
     setUserAnswers([]);
     setNumber(0);
     setLoading(false);
-    console.log(questions);
+    //console.log(questions);
   };
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-
-  }
+    if (!gameOver) {
+      //Users answer
+      const answer = e.currentTarget.value;
+      // Check answer against correct value
+      const correct = questions[number].correct_answer === answer;
+      //Add score if answer is correct
+      if (correct) setScore(prev => prev + 1);
+      // Save answer in the array for user answers
+      const answerObject = {
+        question: questions[number].question,
+        answer,
+        correct,
+        correctAnswer: questions[number].correct_answer,
+      };
+      setUserAnswers((prev) => [...prev, answerObject]);
+    }
+  };
 
   const nextQuestion = () => {
+    //Move to next question if not end of game
+    const nextQuestion = number + 1;
 
+    if (nextQuestion === TOTAL_QUESTIONS) {
+      setGameOver(true);
+    } else {
+      setNumber(nextQuestion);
+    }
   }
   return(
     <div className='App'>
