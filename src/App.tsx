@@ -83,7 +83,7 @@ const App = () => {
     <Wrapper>
       <h1>React Quiz with Typescript</h1>
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
-        <button className='star' onClick={ startTrivia }>
+        <button className='start' onClick={ startTrivia }>
           Start
         </button>
       ) : null}
