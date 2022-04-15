@@ -4,7 +4,8 @@ import { fetchQuizQuestions } from './API';
 import QuestionCard from './Components/QuestionCard';
 // Types
 import { Difficulty, QuestionState } from './API';
-
+// Styles
+import { GlobalStyle, Wrapper } from './App.styles';
 
 export type AnswerObject = {
   question: string;
@@ -77,14 +78,16 @@ const App = () => {
     }
   }
   return(
-    <div className='App'>
+    <>
+    <GlobalStyle />
+    <Wrapper>
       <h1>React Quiz with Typescript</h1>
       {gameOver || userAnswers.length === TOTAL_QUESTIONS ? (
         <button className='star' onClick={ startTrivia }>
           Start
         </button>
       ) : null}
-      {!gameOver ? <p className='score'>Score:</p> : null}
+      {!gameOver ? <p className='score'>Score: {score}</p> : null}
       {loading && <p>Loading Questions ...</p>}
       {!loading && !gameOver && (
         <QuestionCard
@@ -100,7 +103,8 @@ const App = () => {
         <button className='next' onClick={ nextQuestion }>Next</button>
       ) : null}
       
-    </div>
+    </Wrapper>
+    </>
   );
 }
 
